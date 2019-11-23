@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import Background from "./bg.png";
 import Chevron from "./down-chevron.png";
+import Foto from "./assets/image/photo.JPG";
+import {Header, Button} from "./components";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -24,16 +32,39 @@ class App extends Component {
 
   onButtonPress = () => {
     alert(`Anda telah terdaftar sebagai ${this.state.email}`)
+    return false
   }
 
   render() {
   const {matches, email} = this.state
     return (
+      <Router>
       <div style={styles.background}>
         <div style={styles.overlay}>
-          <div style={styles.container}>
-            <div style={styles.topText}>KIKY</div>
+          
+          <div style={{display: 'flex', position: 'absolute', width: '100%', backgroundColor: 'rgba(255,255,255,0.75)', justifyContent: 'center'}}>
+            <Link style={styles.link} to="/"><section style={styles.section}>Home</section></Link>
+            <Link style={styles.link} to="/about"><section style={styles.section}>About Me</section></Link>
+          </div>
 
+          <Switch>
+          <Route path="/about">
+            <div style={styles.container}>
+                <div style={{alignSelf: 'center', marginTop: 64}}>
+                  <center>
+                <img src={Foto} alt="" style={{height: 168, width: 150, alignSelf: 'center'}} />
+                </center>
+                  <div style={matches ? styles.h1 : styles.h2}>
+                    
+                    Hello! My Name is <b>Rizky</b> as Full-stack Developer From <b>Arkademy</b>
+                  </div>
+                </div>
+            </div>
+          </Route>
+          <Route path="/">
+          <div style={styles.container}>
+            <Header title="ANANDA RIZKY YULIANSYAH" />
+           
             <div style={matches ? styles.h1 : styles.h2}>
               The Most Simple & Yet <b>Powerful Way</b> to <b>Launch</b> your startup.
             </div>
@@ -49,9 +80,9 @@ class App extends Component {
                   style={ matches ? styles.input : styles.input2 }
                 />
               </div>
-              <div onClick={this.onButtonPress} style={styles.button}>
-                Submit
-              </div>
+
+              <Button value={email} title="DAFTAR" />
+              
             </div>
 
             <div style={styles.wrapperScroll}>
@@ -65,8 +96,11 @@ class App extends Component {
               />
             </div>
           </div>
+          </Route>
+        </Switch>
         </div>
       </div>
+      </Router>
     );
   }
 }
@@ -161,6 +195,17 @@ const styles = {
   },
   icon: {
     alignSelf: "center"
+  },
+  section: {
+    margin: 8,
+    padding: 8,
+    borderStyle: 'groove',
+    borderWidth: 1,
+    color: '#000',
+    borderColor: 'red'
+  },
+  link: {
+    textDecoration: 'none'
   }
 };
 
